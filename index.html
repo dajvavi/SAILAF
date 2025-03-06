@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Réplica de Excel en HTML</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+  <script src="script.js" defer></script>
+  <style>
+    /* ===== Reset básico ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #ffffff;
+    }
+
+    /* ===== Contenedor principal ===== */
+    .excel-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* Espacio entre secciones */
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ===== Barra de botones (simulando la cinta de Excel) ===== */
+    .header-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .header-buttons button {
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .header-buttons button:hover {
+      background-color: #e0e0e0;
+    }
+
+    /* ===== Estilo de tablas ===== */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #000;
+      padding: 4px 8px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 14px;
+    }
+
+    /* Fila de encabezado */
+    thead th {
+      background-color: #d9d9d9; 
+      font-weight: bold;
+    }
+
+    /* Fila que hace de título grande (PATRÓN) */
+    .title-row {
+      background-color: #d9d9d9;
+      font-weight: bold;
+    }
+
+    /* Estilo para las celdas destacadas (las de color rosado en tu imagen) */
+    .highlight {
+      background-color: #ffd7d7; /* Ajusta según el color exacto que necesites */
+    }
+
+    /* Sección inferior (Pesada muestras...) */
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    /* ===== Ejemplo de un contenedor lateral para tablas de “Patrones” y “Controles” ===== */
+    .side-by-side {
+      display: flex;
+      gap: 20px; /* Separación entre tablas */
+    }
+
+    /* Opcional: Ajustar anchos específicos de columna si deseas mayor precisión */
+    /* Ejemplo:
+    col.col-small { width: 80px; }
+    col.col-medium { width: 120px; }
+    col.col-large { width: 200px; }
+    */
+  </style>
+</head>
+<body>
+
+<div class="excel-container">
+  <!-- ===== Simulación de la "barra de herramientas" de Excel ===== -->
+  <div class="header-buttons">
+    <button>Conectar Desconectar</button>
+    <button>Capturar OT</button>
+    <button>Capturar Factores de Corrección</button>
+    <button>Capturar SmartChem 200</button>
+    <button>Generar Listado</button>
+    <button>Mostrar Control de muestras</button>
+      <!-- Nuevo botón para borrar datos -->
+  <button id="clear-data">Borrar datos de muestra</button>
+  </div>
+
+  <!-- ===== Tabla principal ===== -->
+  <table>
+    
+
+    <!-- Encabezados de columna -->
+    <thead>
+      <tr>
+        <th class="highlight">MUESTRA</th>
+        <th class="highlight">Peso (mg)</th>
+        <th class="highlight">Concentración de la muestra (mg/l)</th>
+        <th class="highlight">FC</th>
+        <th class="highlight">Observaciones</th>
+        <th class="highlight">mg/kg M.S. 105ºC (024)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Aquí replicas las filas que necesites
+      <tr>
+        <td>1</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        
+      </tr>
+      <tr>
+        <td>2</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        
+      </tr> -->
+      <!-- Agrega más filas según tu necesidad -->
+    </tbody>
+  </table>
+
+  <!-- ===== Sección con tablas laterales (Patrones / Controles) ===== -->
+  <div class="side-by-side">
+    <!-- Tabla de Patrones y % Residuales -->
+    <table>
+      <thead>
+        <tr>
+          <th class="highlight">Patrones mg/l</th>
+          <th class="highlight">% Residuales</th>
+          <th class="highlight">Controles</th>
+          <th class="highlight">valor obtenido</th>
+        </tr>
+        
+      </thead>
+      <tbody>
+        <tr>
+          <td>0.163</td>
+          <td></td>
+          <td>RBL</td>
+          <td></Td>
+        </tr>
+        <tr>
+          <td>0.326</td>
+          <td></td>
+          <td>P1.02</td>
+          <Td></Td>
+        </tr>
+        <tr>
+          <td>0.509</td>
+          <td></td>
+          <td>P4.07</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>1.63</td>
+          <td ></td>
+          <td>P1.02</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3.26</td>
+          <td ></td>
+          <td>P4.07</td>
+          <td></td>
+        </tr>
+        <tr>
+            <td>4.89</td>
+            <td ></td>
+            <td>P1.02</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td ></td>
+            <td>P4.07</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td ></td>
+            <td>P1.02</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="highlight">R2</td>
+            <td ></td>
+            <td>P4.07</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td ></td>
+            <td ></td>
+            <td>P1.02</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td ></td>
+            <td>P4.07</td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- Si necesitas otra tabla para Controles, la puedes colocar aquí, 
+         o en el mismo <table> anterior con un colspan, etc. -->
+    <!-- Por ejemplo: 
+    <table>
+      ...
+    </table>
+    -->
+    <table>
+    
+
+        <!-- Encabezados de columna -->
+        <thead>
+          <tr>
+            <th  class="highlight" colspan="2">Pesada muestra</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí replicas las filas que necesites -->
+          <tr>
+            <td>Balanza</td>
+            <td>SU098</td>
+          </tr>
+          <tr>
+            <td>Fecha</td>
+            <td></td>
+          </tr>
+          </tr>
+          <tr>
+            <td>Nombre</td>
+            <td></td>
+          </tr>
+         </tr>
+         <tr>
+            <td>Firma</td>
+            <td></td>
+        </tr>
+          <!-- Agrega más filas según tu necesidad -->
+        </tbody>
+      </table>
+
+      <table>
+    
+
+        <!-- Encabezados de columna -->
+        <thead>
+          <tr>
+            <th  class="highlight" colspan="2">Análisis de muestra</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí replicas las filas que necesites -->
+          <tr>
+            <td>Tª ext (ºC)</td>
+            <td>SU098</td>
+          </tr>
+          <tr>
+            <td>Fecha</td>
+            <td></td>
+          </tr>
+          </tr>
+          <tr>
+            <td>Nombre</td>
+            <td></td>
+          </tr>
+         </tr>
+         <tr>
+            <td>Firma</td>
+            <td></td>
+        </tr>
+          <!-- Agrega más filas según tu necesidad -->
+        </tbody>
+      </table>
+  </div>
+
+
+</div>
+
+
+
+</body>
+</html>
+
